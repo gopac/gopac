@@ -29,13 +29,13 @@ import (
  * @return bool success or fail
  */
 func HandleArguments(command []string) bool {
-	if (len(command) == 2) {
-		switch command[1] {
-			case "install" : TestCallback()
-			case "update"  : TestCallback()
-		}
-		return true
-	}
-	fmt.Printf("error: expecting 1 argument, recieved %d.\n", len(command) - 1)
-	return false
+    if (len(command) == 2) {
+        switch command[1] {
+            case "install" : TestCallback()
+            case "update"  : TestCallback()
+        }
+        return true
+    }
+    fmt.Printf("error: expecting 1 argument, recieved %d.\n", len(command) - 1)
+    return false
 }

@@ -17,18 +17,18 @@
 package main
 
 import (
-	"os"
-	"fmt"
+    "os"
+    "fmt"
 )
 
 func main() {
-	//config := ParseConfig()
-	HandleArguments(os.Args)
+    //config := ParseConfig()
+    HandleArguments(os.Args)
 }
 
 /**
  * For testing purposes only
  */
 func TestCallback() {
-	fmt.Println("At callback")
+    fmt.Println("At callback")
 }

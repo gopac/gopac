@@ -17,8 +17,8 @@
 package main
 
 import (
-	"./vendor/jconfig"
-	"path/filepath"
+    "./vendor/jconfig"
+    "path/filepath"
     "log"
     "os"
     "fmt"
@@ -29,8 +29,8 @@ import (
  * @var map[string]string all require data
  */
 type Packages struct {
-	file_path   string
-	package_map map[string]string
+    file_path   string
+    package_map map[string]string
 }
 
 /**
@@ -41,14 +41,14 @@ type Packages struct {
  * @return Packages completed struct
  */
 func ParseConfig() Packages {
-	p := Packages{}
-	if (checkGopacfileExists(&p) == true) {
-		config_data := jconfig.LoadConfig(p.file_path)
-		require := config_data.GetStringMap("require")
+    p := Packages{}
+    if (checkGopacfileExists(&p) == true) {
+        config_data := jconfig.LoadConfig(p.file_path)
+        require := config_data.GetStringMap("require")
 
-		sortRequiredPackages(&p, require)
-	}
-	return p
+        sortRequiredPackages(&p, require)
+    }
+    return p
 }
 
 /**
@@ -58,11 +58,11 @@ func ParseConfig() Packages {
  * @string directory path
  */
 func getRelativePath() string {
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	if err != nil {
-		log.Fatal(err)
-	}
-	return dir
+    dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+    if err != nil {
+        log.Fatal(err)
+    }
+    return dir
 }
 
 /**
@@ -72,15 +72,15 @@ func getRelativePath() string {
  * @param *Packages the package struct
  */
 func checkGopacfileExists(packages_data *Packages) bool {
-	file_path := getRelativePath()
-	file_path = file_path + "/gopac.json"
-	if _, err := os.Stat(file_path); err == nil {
-		packages_data.file_path = file_path
-	    return true
-	}
-	fmt.Printf("error: gopac.json not found.")
+    file_path := getRelativePath()
+    file_path = file_path + "/gopac.json"
+    if _, err := os.Stat(file_path); err == nil {
+        packages_data.file_path = file_path
+        return true
+    }
+    fmt.Printf("error: gopac.json not found.")
 
-	return false
+    return false
 }
 
 /**
@@ -91,8 +91,8 @@ func checkGopacfileExists(packages_data *Packages) bool {
  * @param map[string]interface{} the initial require data
  */
 func sortRequiredPackages(p *Packages, require map[string]interface{})  {
-	p.package_map = make(map[string]string)
-	for k, v := range require {
-		p.package_map[k] = v.(string)
-	}
+    p.package_map = make(map[string]string)
+    for k, v := range require {
+        p.package_map[k] = v.(string)
+    }
 }
