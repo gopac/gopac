@@ -1,0 +1,3 @@
+.DS_Store
+bin/gopac
+vendor/git2go/script/libgit2

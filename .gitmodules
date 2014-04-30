@@ -1,0 +1,6 @@
+[submodule "vendor/git2go"]
+	path = vendor/git2go
+	url = https://github.com/gopac/git2go.git
+[submodule "vendor/jconfig"]
+	path = vendor/jconfig
+	url = https://github.com/gopac/jconfig.git
