@@ -22,8 +22,11 @@ import (
 )
 
 func main() {
-    //config := ParseConfig()
-    HandleArguments(os.Args)
+    // config := ParseConfig()
+
+	// Parts of the public API (here for texting atm)
+    // HandleArguments(os.Args)
+    // ClonePackageRepo()
 }
 
 /**
