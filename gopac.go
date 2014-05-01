@@ -24,7 +24,7 @@ import (
 func main() {
     // config := ParseConfig()
 
-	// Parts of the public API (here for texting atm)
+    // Parts of the public API (here for texting atm)
     // HandleArguments(os.Args)
     // ClonePackageRepo()
 }
