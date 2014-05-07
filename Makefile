@@ -13,7 +13,7 @@ gopac: dependencies gopac.go
 
 install:
 	cp bin/gopac /usr/local/bin/gopac
-	&echo "Gopac has been installed!"
+	@echo "Gopac has been installed!"
 
 clean: ${BIN_PATH}
 	rm -f ${BIN_PATH}
