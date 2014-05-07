@@ -17,21 +17,22 @@
 package main
 
 import (
-    "os"
-    "fmt"
+ 	"os"
+    //"fmt"
 )
 
 func main() {
-    // config := ParseConfig()
+    config := ParseConfig()
 
     // Parts of the public API (here for texting atm)
-    // HandleArguments(os.Args)
-    // ClonePackageRepo()
+    HandleArguments(os.Args)
+    p := ClonePackageRepo()
+    p.CloneDependencies(&config)
 }
 
 /**
  * For testing purposes only
  */
 func TestCallback() {
-    fmt.Println("At callback")
+    
 }

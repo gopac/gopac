@@ -4,3 +4,9 @@
 [submodule "vendor/jconfig"]
 	path = vendor/jconfig
 	url = https://github.com/gopac/jconfig.git
+[submodule "vendor/ts"]
+	path = vendor/ts
+	url = https://github.com/gopac/ts.git
+[submodule "vendor/pb"]
+	path = vendor/pb
+	url = https://github.com/gopac/pb.git
