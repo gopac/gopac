@@ -42,7 +42,6 @@ type PackageManager struct {
  */
 func ClonePackageRepo() *PackageManager {
     p := new(PackageManager)
-
     // Subject to change
     packages_url := "https://github.com/gopac/packages.git"
 
@@ -54,9 +53,8 @@ func ClonePackageRepo() *PackageManager {
 }
 
 /**
- * Clones all first iteration of dependencies
- * at the moment
- * TODO: Abstract into different functions
+ * Initiates the process to loop through
+ * and clone needed dependencies
  *
  * @param *Packages package object
  *
@@ -66,35 +64,10 @@ func (p *PackageManager) CloneDependencies(packages *Packages) {
     package_count := len(packages.package_map)
     bar := pb.StartNew(package_count * 2)
 
-    fmt.Println("Installing:")
-    for packet, branch := range packages.package_map {
-        fmt.Println(packet, " -> ", branch)
-    }
+    listAllDependencies(packages)
 
-    for packet, branch := range packages.package_map {
-        file_query := p.home_dir + "/" + packet + "/package.json"
-        if _, err := os.Stat(file_query); err == nil {
-            config_data := jconfig.LoadConfig(file_query)
-            new_package := config_data.GetStringMap("package")
-            makeVendorDirectory()
+    loopThroughDependencies(p, packages, bar)
 
-            clone_options := new(git.CloneOptions)
-            clone_options.CheckoutBranch = branch
-            packet_path := "vendor/" + new_package["vendor"].(string) + "/" + packet
-
-            var wg sync.WaitGroup
-            wg.Add(1)
-
-            go func () {
-                bar.Increment()
-                git.Clone(new_package["url"].(string), packet_path, clone_options)
-                bar.Increment()
-                wg.Done()
-            }()
-
-            wg.Wait()
-        }
-    }
     bar.FinishPrint("\nSuccess!\n")
 }
 
@@ -118,6 +91,57 @@ func checkForPackageRepo(p *PackageManager) bool {
     }
     makeHomeDirectory(p.home_dir)
     return false
+}
+
+/**
+ * Clones all first iteration of dependencies
+ * at the moment
+ * TODO: Abstract into different functions
+ *
+ * @param *PackageManager
+ * @param *Packages package object
+ * @param *pb.ProgressBar
+ *
+ * @return nil
+ */
+func loopThroughDependencies(p *PackageManager, packages *Packages, bar *pb.ProgressBar) {
+    for packet, branch := range packages.package_map {
+        file_query := p.home_dir + "/" + packet + "/package.json"
+        if _, err := os.Stat(file_query); err == nil {
+            config_data := jconfig.LoadConfig(file_query)
+            new_package := config_data.GetStringMap("package")
+            makeVendorDirectory()
+
+            clone_options := new(git.CloneOptions)
+            clone_options.CheckoutBranch = branch
+            packet_path := "vendor/" + new_package["vendor"].(string) + "/" + packet
+
+            var wg sync.WaitGroup
+            wg.Add(1)
+
+            go func () {
+                bar.Increment()
+                git.Clone(new_package["url"].(string), packet_path, clone_options)
+                bar.Increment()
+                wg.Done()
+            }()
+            wg.Wait()
+        }
+    }
+}
+
+/**
+ * Lists all dependencies to be installed
+ *
+ * @param *Packages package object
+ *
+ * @return nil
+ */
+func listAllDependencies(packages *Packages) {
+    fmt.Println("Installing:")
+    for packet, branch := range packages.package_map {
+        fmt.Println(packet, " -> ", branch)
+    }
 }
 
 /**
