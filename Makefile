@@ -12,7 +12,7 @@ gopac: dependencies gopac.go
 	go build -o ${BIN_PATH}
 
 install:
-	cp bin/gopac usr/local/bin/gopac
+	cp bin/gopac /usr/local/bin/gopac
 	&echo "Gopac has been installed!"
 
 clean: ${BIN_PATH}
